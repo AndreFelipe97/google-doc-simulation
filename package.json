@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@stitches/react": "^1.2.8",
     "@typegoose/typegoose": "^11.5.0",
     "@types/node": "20.6.3",
@@ -22,6 +23,7 @@
     "next": "13.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "swr": "^2.2.4",
     "typescript": "5.2.2"
   }
 }

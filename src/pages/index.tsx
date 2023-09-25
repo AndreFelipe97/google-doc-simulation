@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import { Roboto } from 'next/font/google'
-import { Container } from '@/styles/index.styles'
+import { Container, Content } from '@/styles/index.styles'
 import { Table } from '@/components/table'
+import { ModalForm } from '@/components/modalForm'
 
 const roboto = Roboto({ weight: '400', subsets: ['latin'] })
 
@@ -16,7 +17,10 @@ export default function Home() {
       </Head>
       <Container className={`${roboto.className}`}>
         <h1>Lista de arquivos</h1>
-        <Table />
+        <Content>
+          <ModalForm />
+          <Table />
+        </Content>
       </Container>
     </>
   )
