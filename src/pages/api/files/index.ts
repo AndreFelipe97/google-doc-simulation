@@ -5,6 +5,7 @@ import dbConnect from "@/lib/dbConnect";
 interface CreateFileBody {
   title: string;
   slug: string;
+  content: string;
 }
 
 export default async function handler(
@@ -33,6 +34,7 @@ export default async function handler(
     const file = new FileModel({
       title: body.title,
       slug: `${body.title}-${geraStringAleatoria()}`,
+      content: body.content,
     });
     await file.save();
 

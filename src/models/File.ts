@@ -11,6 +11,9 @@ export class File {
   @prop()
   slug: string;
 
+  @prop()
+  content: string;
+
   @prop({ default: () => new Date() })
   createdAt: Date;
 }
