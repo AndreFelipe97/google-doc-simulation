@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Input, Spin } from "antd";
+import { Button, Input, Spin } from "antd";
 const { TextArea } = Input;
 import { Roboto } from "next/font/google";
 
@@ -7,16 +7,9 @@ import { fetcher } from "@/lib/swr";
 
 import { Container } from "@/styles/edit.styles";
 import useSWR from "swr";
+import Link from "next/link";
 
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
-
-interface DataType {
-  _id: string;
-  title: string;
-  slug: string;
-  content: string;
-  createdAt: Date;
-}
 
 export default function FileEdit() {
   const router = useRouter();
@@ -30,7 +23,10 @@ export default function FileEdit() {
   return (
     <Container className={`${roboto.className}`}>
       <h1>Edição do arquivo {data?.title}</h1>
-      <TextArea rows={4} cols={5} defaultValue={data?.content} maxLength={6} />
+      <TextArea rows={30} cols={5} defaultValue={data?.content} />
+      <Link key="back" href="/">
+        <Button>Voltar</Button>
+      </Link>
     </Container>
   );
 }
