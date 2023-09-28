@@ -15,7 +15,6 @@ export function ModalForm() {
   };
 
   const onFinish = async (values: any) => {
-    console.log("Success:", values);
     try {
       await api.post("/files", values);
       setIsModalOpen(false);
