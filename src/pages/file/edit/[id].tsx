@@ -91,6 +91,17 @@ export default function FileEdit() {
             id="content"
             rows={30}
             value={message}
+            onKeyUp={async () => {
+              try {
+                await api.put(`/files/${id}`, {
+                  ...data,
+                  content: message,
+                });
+                // router.push("/");
+              } catch (e) {
+                console.log(e);
+              }
+            }}
             onChange={(event) => {
               setMessage(event.target.value);
               socket?.emit("sendMsg", event.target.value, String(id));
@@ -102,10 +113,6 @@ export default function FileEdit() {
               <Link key="back" href="/">
                 <Button>Voltar</Button>
               </Link>
-
-              <Button type="primary" onClick={handleSubmit}>
-                Salvar
-              </Button>
             </ButtonContainer>
           )}
         </>

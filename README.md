@@ -1,10 +1,10 @@
-## <h1>Shopping list documentation</h1>
+## <h1>Google docs simulation</h1>
 
 <h3>Initial setting</h3>
 
 <h5>1. Env</h5>
 
-<p>It is necessary to make a copy of the .env.local.exemplo file, rename the file to .env and fill it with your data.</p>
+<p>It is necessary to make a copy of the .env.local.exemplo file, rename the file to .env.local and fill it with your data.</p>
 
 <h6>File</h6>
 
@@ -33,13 +33,9 @@
 
 Editing the file: just follow the steps listed above.
 
-Real-time viewing: paste this address into your browser or send the link to the person who needs to see it. In both situations, you need to replace the id with the file id.
+Real-time viewing: Copy the address shown in the view button in the file list and send it to the person you want to see.
 
-Note: It is possible to get the file id at the address of the editing screen, right after "edit/".
-
-![Alt text](./docs/images/editAddress.png)
-
-Viewing address: http://localhost:3000/file/edit/<strong>fileId</strong>?view=true
+![Alt text](./docs/images/buttons.png)
 
 <h5>5. Project images</h5>
 

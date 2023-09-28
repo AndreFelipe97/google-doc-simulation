@@ -22,9 +22,14 @@ export function Table() {
         title="Action"
         key="action"
         render={(_: any, record: DataType) => (
-          <Link key={record._id} href={`/file/edit/${record._id}`}>
-            Visualizar
-          </Link>
+          <Space size="middle">
+            <Link key={record._id} href={`/file/edit/${record._id}`}>
+              Editar
+            </Link>
+            <Link key={record._id} href={`/file/edit/${record._id}?view=true`}>
+              Visualizar
+            </Link>
+          </Space>
         )}
       />
     </TableComponent>
