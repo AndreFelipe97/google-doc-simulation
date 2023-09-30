@@ -1,6 +1,4 @@
 import { Space, Table as TableAntd, Tag } from "antd";
-import { TableComponent } from "./styles";
-import { useEffect, useState } from "react";
 import { fetcher } from "@/lib/swr";
 import Link from "next/link";
 import useSWR from "swr";
@@ -13,7 +11,7 @@ interface DataType {
 }
 
 export function Table() {
-  const { data } = useSWR(`http://localhost:3000/api/files/`, fetcher);
+  const { data } = useSWR(`/api/files/`, fetcher);
 
   return (
     <TableAntd dataSource={data} pagination={false}>

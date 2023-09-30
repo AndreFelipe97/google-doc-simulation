@@ -6,7 +6,6 @@ import { Roboto } from "next/font/google";
 import { fetcher } from "@/lib/swr";
 import { io, type Socket } from "socket.io-client";
 
-import { ButtonContainer, Container } from "@/styles/edit.styles";
 import useSWR from "swr";
 import Link from "next/link";
 import {
@@ -17,15 +16,18 @@ import { useContext, useEffect, useState } from "react";
 import { api } from "@/lib/axios";
 import { BreadcrumbsContext } from "@/contexts/breadcrumbs";
 import { TitlePageContext } from "@/contexts/PageTitle";
-
-const roboto = Roboto({ weight: "400", subsets: ["latin"] });
+import { GetStaticPaths, GetStaticProps } from "next";
 
 let socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null;
 
-export default function FileEdit() {
+interface FileEditProps {
+  fileRouter: string;
+}
+
+export default function FileEdit({ fileRouter }: FileEditProps) {
   const router = useRouter();
   const { id, view } = router.query;
-  const { data } = useSWR(`http://localhost:3000/api/files/${id}`, fetcher);
+  const { data } = useSWR(fileRouter, fetcher);
   const [message, setMessage] = useState("");
 
   const { setBreadcrumbsType } = useContext(BreadcrumbsContext);
@@ -72,8 +74,8 @@ export default function FileEdit() {
 
 
   useEffect(() => {
-    setTitlePage(data.title);
-  }, [data.title, setTitlePage]);
+    setTitlePage(data?.title);
+  }, [data?.title, setTitlePage]);
 
   return (
     <>
@@ -118,3 +120,20 @@ export default function FileEdit() {
     </>
   );
 }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const id = String(params?.id);
+
+  return {
+    props: {
+      fileRouter: `${process.env.BASE_URL}/api/files/${id}`
+    },
+  };
+};
