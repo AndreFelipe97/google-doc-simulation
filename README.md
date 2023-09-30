@@ -47,6 +47,10 @@ Real-time viewing: Copy the address shown in the view button in the file list an
 
 ![Alt text](./docs/images/fileForm.png)
 
+<h6>Success Register</h6>
+
+![Alt text](./docs/images/successRegister.png)
+
 <h6>File editing allowed</h6>
 
 ![Alt text](./docs/images/fileEditingAllowed.png)

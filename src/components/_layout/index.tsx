@@ -1,24 +1,17 @@
-import React, { ReactNode, useContext, useEffect, useState } from 'react';
-import {
-  FormOutlined,
-  UnorderedListOutlined,
-} from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, notification, theme } from 'antd';
-import { useRouter } from 'next/router';
+import React, { ReactNode, useContext, useEffect } from 'react';
+import { Layout, notification, theme } from 'antd';
 import { NotificationContext } from '@/contexts/notification';
 import { BreadcrumbsLayout } from './breadcrumbs';
-import BreadcrumbsProvider, { BreadcrumbsContext } from '@/contexts/breadcrumbs';
 import { TitlePageContext } from '@/contexts/PageTitle';
+import { Sidebar } from './Sidebar';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer } = Layout;
 
 interface LayoutDefaultProps {
   children: ReactNode;
 }
 
 export function LayoutDefault({ children }: LayoutDefaultProps) {
-  const [collapsed, setCollapsed] = useState(false);
-
   const [api, contextHolder] = notification.useNotification();
 
   const { state, message, description } = useContext(NotificationContext);
@@ -35,36 +28,10 @@ export function LayoutDefault({ children }: LayoutDefaultProps) {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  const router = useRouter();
-
-  const { setBreadcrumbsType } = useContext(BreadcrumbsContext)
-
   return (
     <Layout style={{ minHeight: '100vh' }}>
       {contextHolder}
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} >
-        <div className="demo-logo-vertical" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={[
-          {
-            key: '1',
-            icon: <UnorderedListOutlined />,
-            label: 'Lista de arquivos',
-            onClick: () => {
-              setBreadcrumbsType(['Lista de arquivos'])
-              router.push('/')
-            }
-          },
-          {
-            key: '2',
-            icon: <FormOutlined />,
-            label: 'Cadastrar arquivo',
-            onClick: () => {
-              setBreadcrumbsType(['Cadastrar arquivo'])
-              router.push('/file/add')
-            }
-          },
-        ]} />
-      </Sider>
+      <Sidebar />
       <Layout>
         <Header style={{
           padding: '0 20px 0',
