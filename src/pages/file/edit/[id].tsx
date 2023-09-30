@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Button, Form, Input, Spin } from "antd";
+import { Button, Form, Input, Row, Spin } from "antd";
 const { TextArea } = Input;
 import { Roboto } from "next/font/google";
 
@@ -13,8 +13,10 @@ import {
   ClientToServerEvents,
   ServerToClientEvents,
 } from "@/types/socketCustomTypes";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { api } from "@/lib/axios";
+import { BreadcrumbsContext } from "@/contexts/breadcrumbs";
+import { TitlePageContext } from "@/contexts/PageTitle";
 
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 
@@ -26,7 +28,11 @@ export default function FileEdit() {
   const { data } = useSWR(`http://localhost:3000/api/files/${id}`, fetcher);
   const [message, setMessage] = useState("");
 
+  const { setBreadcrumbsType } = useContext(BreadcrumbsContext);
+  const { setTitlePage } = useContext(TitlePageContext);
+
   useEffect(() => {
+    setBreadcrumbsType(['Lista de arquivos', view ? 'Visualizar' : 'Editar'])
     if (!socket) {
       void fetch("/api/socket");
       socket = io();
@@ -54,18 +60,6 @@ export default function FileEdit() {
     };
   }, []);
 
-  const handleSubmit = async () => {
-    try {
-      await api.put(`/files/${id}`, {
-        ...data,
-        content: message,
-      });
-      router.push("/");
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   useEffect(() => {
     if (socket && id) {
       socket.emit(
@@ -76,17 +70,19 @@ export default function FileEdit() {
     }
   }, [id, data]);
 
-  if (!data?.content) {
-    return <Spin />;
-  }
+
+  useEffect(() => {
+    setTitlePage(data.title);
+  }, [data.title, setTitlePage]);
 
   return (
-    <Container className={`${roboto.className}`}>
+    <>
       {!data?.content ? (
-        <Spin />
+        <Row justify="center" align="middle">
+          <Spin />
+        </Row>
       ) : (
         <>
-          <h1>Edição do arquivo {data?.title}</h1>
           <TextArea
             id="content"
             rows={30}
@@ -109,14 +105,16 @@ export default function FileEdit() {
             disabled={view === "true" ? true : false}
           />
           {view !== "true" && (
-            <ButtonContainer>
+            <Row justify='end' style={{
+              marginTop: 10
+            }}>
               <Link key="back" href="/">
                 <Button>Voltar</Button>
               </Link>
-            </ButtonContainer>
+            </Row>
           )}
         </>
       )}
-    </Container>
+    </>
   );
 }
