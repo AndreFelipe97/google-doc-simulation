@@ -16,8 +16,8 @@ export function Table() {
   const { data } = useSWR(`http://localhost:3000/api/files/`, fetcher);
 
   return (
-    <TableComponent dataSource={data}>
-      <Column title="Titulo" dataIndex="title" key="title" />
+    <TableAntd dataSource={data} pagination={false}>
+      <Column title="Titulo do arquivo" dataIndex="title" key="title" />
       <Column
         title="Action"
         key="action"
@@ -32,6 +32,6 @@ export function Table() {
           </Space>
         )}
       />
-    </TableComponent>
+    </TableAntd>
   );
 }
